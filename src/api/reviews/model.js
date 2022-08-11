@@ -2,11 +2,11 @@ import mongoose from "mongoose"
 
 const { Schema, model } = mongoose
 
-const reviewsSchema = new Schema(
+export const reviewsSchema = new Schema(
   {
-    product: { type: Schema.Types.ObjectId, ref: "Product" },
-    rate: { type: Number, required: true },
+    rate: { type: Number, min: 1, max: 5, required: true },
     comment: { type: String, required: true },
+    product_id: { type: Schema.Types.ObjectId, ref: "Product", required: true },
   },
   {
     timestamps: true,

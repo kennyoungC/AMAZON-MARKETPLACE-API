@@ -37,6 +37,7 @@ productRouter.get("/", async (req, res, next) => {
       .skip(mongoQuery.options.skip)
       .limit(mongoQuery.options.limit)
       .sort(mongoQuery.options.sort)
+      .populate({ path: "reviews", select: "rate comment" })
     res.send(products)
   } catch (error) {
     next(createHttpError(500, error))
@@ -93,6 +94,20 @@ productRouter.delete("/:id", async (req, res, next) => {
       await cloudinary.uploader.destroy(product.cloudinaryId)
       await productModel.findByIdAndDelete(req.params.id)
       res.sendStatus(204)
+    } else {
+      next(createHttpError(404, "Product not found"))
+    }
+  } catch (error) {
+    next(createHttpError(500, error))
+  }
+})
+productRouter.get("/:productId/reviews", async (req, res, next) => {
+  try {
+    const product = await productModel
+      .findById(req.params.productId)
+      .populate("reviews")
+    if (product) {
+      res.send(product.reviews)
     } else {
       next(createHttpError(404, "Product not found"))
     }
