@@ -14,7 +14,7 @@ const userSchema = new Schema(
       street: { type: String },
       number: { type: Number },
     },
-    cartItems: [
+    purchaseHistory: [
       {
         name: String,
         category: String,

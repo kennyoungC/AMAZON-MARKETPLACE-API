@@ -4,6 +4,7 @@ import cors from "cors"
 import listEndpoints from "express-list-endpoints"
 import productRouter from "./api/products/index.js"
 import reviewRouter from "./api/reviews/index.js"
+import userRouter from "./api/users/index.js"
 
 const port = process.env.PORT || 3001
 
@@ -14,6 +15,7 @@ server.use(express.json())
 
 server.use("/products", productRouter)
 server.use("/reviews", reviewRouter)
+server.use("/users", userRouter)
 
 mongoose.connect(process.env.MONGODB_URI)
 
