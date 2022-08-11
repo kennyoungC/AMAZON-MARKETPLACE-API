@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import listEndpoints from "express-list-endpoints"
+import productRouter from "./api/products/index.js"
 
 const port = process.env.PORT || 3001
 
@@ -10,6 +11,8 @@ const server = express()
 server.use(cors())
 server.use(express.json())
 
+server.use("/products", productRouter)
+
 mongoose.connect(process.env.MONGODB_URI)
 
 mongoose.connection
@@ -17,6 +20,7 @@ mongoose.connection
     console.log("Mongoose is connected")
     server
       .listen(port, () => {
+        console.table(listEndpoints(server))
         console.log(`Server is running on port ${port}`)
       })
       .on("error", (err) => {
