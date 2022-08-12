@@ -20,7 +20,6 @@ productRouter.post(
         imageUrl: result.secure_url,
         cloudinaryId: result.public_id,
       })
-
       await newProduct.save()
       res.status(201).send(newProduct)
     } catch (err) {
